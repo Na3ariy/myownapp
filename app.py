@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[6]:
+# In[ ]:
 
 
 from flask import Flask, render_template, request, redirect, url_for, session
@@ -14,6 +14,7 @@ from flask_talisman import Talisman
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"  # Змінити на більш надійний ключ
+app.config['WTF_CSRF_SECRET_KEY'] = "secure_csrf_key"  # Додано для CSRF
 
 # Безпека
 csrf = CSRFProtect(app)  # CSRF захист

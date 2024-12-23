@@ -2,15 +2,15 @@
 <html>
 <head>
     <title>Реєстрація</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
     <h1>Реєстрація</h1>
     <form method="POST" action="/register">
+        {{ csrf_token() }}
         <label for="username">Логін:</label>
-        <input type="text" name="username" maxlength="50" required>
+        <input type="text" name="username" required>
         <label for="password">Пароль:</label>
-        <input type="password" name="password" minlength="6" required>
+        <input type="password" name="password" required>
         <button type="submit">Зареєструватися</button>
     </form>
     <p>Уже маєте акаунт? <a href="/login">Увійти</a></p>

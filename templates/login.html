@@ -2,13 +2,13 @@
 <html>
 <head>
     <title>Вхід</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
     <h1>Вхід</h1>
     <form method="POST" action="/login">
+        {{ csrf_token() }}
         <label for="username">Логін:</label>
-        <input type="text" name="username" maxlength="50" required>
+        <input type="text" name="username" required>
         <label for="password">Пароль:</label>
         <input type="password" name="password" required>
         <button type="submit">Увійти</button>
