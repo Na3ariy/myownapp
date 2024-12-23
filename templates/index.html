@@ -1,26 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Менеджер завдань</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ваші завдання</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        form {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            background: #fff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .task-title {
+            flex: 1;
+        }
+        .task-actions a {
+            margin-left: 10px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .task-actions a:hover {
+            text-decoration: underline;
+        }
+        .logout {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .logout a {
+            color: #ff4d4d;
+            text-decoration: none;
+        }
+        .logout a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Ваші завдання</h1>
-    <form action="/add" method="POST">
-        {{ csrf_token() }}
-        <input type="text" name="title" placeholder="Нове завдання" required>
-        <button type="submit">Додати</button>
-    </form>
-    <ul>
-        {% for task in tasks %}
-        <li>
-            {{ task[2] }}
-            {% if not task[3] %}
-            <a href="/complete/{{ task[0] }}">Виконати</a>
-            {% endif %}
-            <a href="/delete/{{ task[0] }}">Видалити</a>
-        </li>
-        {% endfor %}
-    </ul>
-    <a href="/logout">Вийти</a>
+    <div class="container">
+        <h1>Ваші завдання</h1>
+        <form action="/add" method="POST">
+            {{ csrf_token() }}
+            <input type="text" name="title" placeholder="Додайте нове завдання" required>
+            <button type="submit">Додати</button>
+        </form>
+        <ul>
+            {% for task in tasks %}
+            <li>
+                <span class="task-title">{{ task[2] }}</span>
+                <div class="task-actions">
+                    {% if not task[3] %}
+                    <a href="/complete/{{ task[0] }}">Позначити виконаним</a>
+                    {% endif %}
+                    <a href="/delete/{{ task[0] }}">Видалити</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="logout">
+            <a href="/logout">Вийти</a>
+        </div>
+    </div>
 </body>
 </html>
