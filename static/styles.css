@@ -21,7 +21,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-form input[type="text"], form input[type="password"] {
+form input[type="text"], form select {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -44,6 +44,9 @@ form button:hover {
 }
 
 ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;

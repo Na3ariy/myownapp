@@ -9,19 +9,29 @@
 <body>
     <div class="container">
         <h1>Ваші завдання</h1>
+        <form method="GET" action="/search">
+            <input type="text" name="query" placeholder="Шукати завдання..." value="{{ query or '' }}">
+            <button type="submit">Пошук</button>
+        </form>
         <form action="/add" method="POST">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <input type="text" name="title" placeholder="Додайте нове завдання" required>
+            <select name="priority">
+                <option value="Низький">Низький</option>
+                <option value="Середній" selected>Середній</option>
+                <option value="Високий">Високий</option>
+            </select>
             <button type="submit">Додати</button>
         </form>
         <ul>
             {% for task in tasks %}
             <li class="{{ 'completed' if task[3] else 'pending' }}">
-                <span class="task-title">{{ task[2] }}</span>
+                <span class="task-title">{{ task[2] }} (Пріоритет: {{ task[4] }})</span>
                 <div class="task-actions">
                     {% if not task[3] %}
                     <a href="/complete/{{ task[0] }}">Позначити виконаним</a>
                     {% endif %}
+                    <a href="/edit/{{ task[0] }}">Редагувати</a>
                     <a href="/delete/{{ task[0] }}">Видалити</a>
                 </div>
             </li>
