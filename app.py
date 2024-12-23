@@ -135,13 +135,12 @@ def complete_task(task_id):
     conn.close()
     return redirect(url_for("index"))
 
+@app.route("/logout")
+def logout():
+    session.pop("user_id", None)
+    return redirect(url_for("login"))
+
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
-
-
-# In[ ]:
-
-
-
 
