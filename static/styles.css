@@ -1,52 +1,56 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px;
+    padding: 0;
     background-color: #f4f4f9;
     color: #333;
 }
+.container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 h1 {
-    color: #333;
     text-align: center;
+    color: #007bff;
 }
 form {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
+    margin-top: 20px;
 }
-input, button {
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+input {
+    width: 100%;
     padding: 10px;
-    font-size: 16px;
-    margin-right: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
     cursor: pointer;
 }
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 20px auto;
-    max-width: 600px;
+button:hover {
+    background: #0056b3;
 }
-li {
-    background: #fff;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #ccc;
-}
-li.completed {
-    text-decoration: line-through;
-    color: #888;
+p {
+    text-align: center;
 }
 a {
-    text-decoration: none;
     color: #007bff;
-    margin-left: 10px;
-    cursor: pointer;
+    text-decoration: none;
 }
 a:hover {
     text-decoration: underline;
