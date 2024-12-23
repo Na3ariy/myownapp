@@ -63,6 +63,7 @@ def register():
 # Вхід
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    error = None  # Для зберігання повідомлення про помилку
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -77,8 +78,8 @@ def login():
             session["user_id"] = user[0]
             return redirect(url_for("index"))
         else:
-            return "Невірний логін або пароль!", 401
-    return render_template("login.html")
+            error = "Невірний логін або пароль!"  # Повідомлення про помилку
+    return render_template("login.html", error=error)
 
 # Головна сторінка (завдання користувача)
 @app.route("/")

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вхід</title>
-    <!-- Підключення зовнішнього CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
@@ -18,6 +17,9 @@
             <input type="password" name="password" id="password" required>
             <button type="submit">Увійти</button>
         </form>
+        {% if error %}
+        <p class="error-message">{{ error }}</p>
+        {% endif %}
         <p>Ще не зареєстровані? <a href="/register">Зареєструватися</a></p>
     </div>
 </body>
