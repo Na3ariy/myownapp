@@ -1,22 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[4]:
-
-
-get_ipython().system('pip install flask')
-
-
-# In[5]:
-
-
-get_ipython().system('pip install flask-wtf')
-get_ipython().system('pip install flask-limiter')
-get_ipython().system('pip install flask-talisman')
-get_ipython().system('pip install bcrypt')
-get_ipython().system('pip install gunicorn')
-
-
 # In[6]:
 
 
