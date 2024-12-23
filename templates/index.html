@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ваші завдання</title>
-    <!-- Підключення зовнішнього CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
@@ -17,7 +16,7 @@
         </form>
         <ul>
             {% for task in tasks %}
-            <li>
+            <li class="{{ 'completed' if task[3] else 'pending' }}">
                 <span class="task-title">{{ task[2] }}</span>
                 <div class="task-actions">
                     {% if not task[3] %}

@@ -21,18 +21,12 @@ h1 {
     margin-bottom: 20px;
 }
 
-form {
-    margin-bottom: 20px;
-}
-
-form input[type="text"],
-form input[type="password"] {
+form input[type="text"], form input[type="password"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-sizing: border-box;
 }
 
 form button {
@@ -49,23 +43,16 @@ form button:hover {
     background: #0056b3;
 }
 
-p {
-    text-align: center;
+ul li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
 }
 
-.error-message {
-    color: #ff4d4d;
-    font-size: 14px;
-    margin-top: 10px;
-    text-align: center;
-    font-weight: bold;
+.pending {
+    background-color: #fff9c4;
 }
 
-a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
+.completed {
+    background-color: #c8e6c9;
 }

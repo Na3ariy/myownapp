@@ -13,13 +13,13 @@ from flask_limiter.util import get_remote_address
 from flask_talisman import Talisman
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"  # Змінити на більш надійний ключ
-app.config['WTF_CSRF_SECRET_KEY'] = "secure_csrf_key"  # Додано для CSRF
+app.secret_key = "supersecretkey"
+app.config['WTF_CSRF_SECRET_KEY'] = "secure_csrf_key"
 
-# Безпека
-csrf = CSRFProtect(app)  # CSRF захист
-Talisman(app)  # HTTPS
-limiter = Limiter(get_remote_address, app=app, default_limits=["100 per minute"])  # Rate Limiting
+csrf = CSRFProtect(app)
+Talisman(app)
+limiter = Limiter(get_remote_address, app=app, default_limits=["100 per minute"])
+
 
 # Ініціалізація бази даних
 def init_db():
@@ -40,12 +40,19 @@ def init_db():
     conn.commit()
     conn.close()
 
-# Реєстрація
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    error = None
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
+
+        # Політика паролів
+        if len(password) < 8 or not any(c.isupper() for c in password) or not any(c.islower() for c in password) or not any(c.isdigit() for c in password):
+            error = "Пароль повинен містити щонайменше 8 символів, одну велику літеру, одну маленьку та одну цифру."
+            return render_template("register.html", error=error)
+
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
         conn = sqlite3.connect("tasks.db")
@@ -54,16 +61,19 @@ def register():
             cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
             conn.commit()
         except sqlite3.IntegrityError:
-            return "Цей логін уже існує!", 400
+            error = "Цей логін уже існує!"
         finally:
             conn.close()
-        return redirect(url_for("login"))
-    return render_template("register.html")
 
-# Вхід
+        if error:
+            return render_template("register.html", error=error)
+        return redirect(url_for("login"))
+    return render_template("register.html", error=error)
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    error = None  # Для зберігання повідомлення про помилку
+    error = None
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -78,10 +88,10 @@ def login():
             session["user_id"] = user[0]
             return redirect(url_for("index"))
         else:
-            error = "Невірний логін або пароль!"  # Повідомлення про помилку
+            error = "Невірний логін або пароль!"
     return render_template("login.html", error=error)
 
-# Головна сторінка (завдання користувача)
+
 @app.route("/")
 def index():
     if "user_id" not in session:
@@ -94,7 +104,7 @@ def index():
     conn.close()
     return render_template("index.html", tasks=tasks)
 
-# Додати завдання
+
 @app.route("/add", methods=["POST"])
 def add_task():
     if "user_id" not in session:
@@ -111,7 +121,7 @@ def add_task():
     conn.close()
     return redirect(url_for("index"))
 
-# Інші маршрути (видалити, позначити виконаним)
+
 @app.route("/delete/<int:task_id>")
 def delete_task(task_id):
     if "user_id" not in session:
@@ -123,6 +133,7 @@ def delete_task(task_id):
     conn.commit()
     conn.close()
     return redirect(url_for("index"))
+
 
 @app.route("/complete/<int:task_id>")
 def complete_task(task_id):
@@ -136,10 +147,12 @@ def complete_task(task_id):
     conn.close()
     return redirect(url_for("index"))
 
+
 @app.route("/logout")
 def logout():
     session.pop("user_id", None)
     return redirect(url_for("login"))
+
 
 if __name__ == "__main__":
     init_db()
